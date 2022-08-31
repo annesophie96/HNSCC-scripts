@@ -65,8 +65,7 @@ while(it.hasNext()) {
   for (int j=0; j<numVar; j++){
       List<Double> tempVal = new ArrayList<Double>(1);
       tempVal.add(i)
-      //print(Histogram.getMeasurementValues(tempVal,columnName[j])[0])
-      if(Histogram.getMeasurementValues(tempVal,columnName[j])[0]!=Double.NaN){delInst=true}
+      if(Histogram.getMeasurementValues(tempVal,columnName[j])[0].isNaN()){delInst=true}
   }
   //if (t%10000==0){ Dialogs.showPlainNotification('Progress',String.valueOf(100*t/maxData)+"%")}
   if(!(i.getParent().getDisplayedName().equals("Tumor")) || !(i.getPathClass().toString().matches("tumorcells")) || delInst==true) {
@@ -79,7 +78,9 @@ print("Elapsed time: "+Duration.between(tic,toc).toMillis()+" ms")
 tic=Instant.now()
 
 maxData=pathObjects.size()
-maxData=Histogram.getMeasurementValues(pathObjects, columnName[0]).length
+maxData=0
+if(maxData==0){return}
+//maxData=Histogram.getMeasurementValues(pathObjects, columnName[0]).length
 
 List<List<Double>> mesVal = new ArrayList<ArrayList<Double>>(numVar);
 for (int i=0; i<numVar; i++){
