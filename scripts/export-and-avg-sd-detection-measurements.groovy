@@ -51,7 +51,7 @@ rawHeader=""
 
 var exists = file.exists()
 
-
+boolean delInst = false
 
 
 tic=Instant.now()
@@ -62,7 +62,14 @@ while(it.hasNext()) {
   PathObject i = it.next();
   t++
   //if (t%10000==0){ Dialogs.showPlainNotification('Progress',String.valueOf(100*t/maxData)+"%")}
-  if(!(i.getParent().getDisplayedName().contains("Tumor")) || !(i.getPathClass().toString().matches("tumorcells"))) {
+  if(!(i.getParent().getDisplayedName().equals("Tumor")) || !(i.getPathClass().toString().matches("tumorcells"))) {
+    it.remove();
+  }
+  delInst=false
+  for (int j=0; j<numVar; j++){
+      if(Histogram.getMeasurementValues(i,columnName[j])==NaN){delInst=true}
+  }
+  else if(delinst){
     it.remove();
   }
 }
@@ -71,6 +78,7 @@ toc=Instant.now()
 print("Elapsed time: "+Duration.between(tic,toc).toMillis()+" ms")
 tic=Instant.now()
 
+maxData=pathObjects.size()
 maxData=Histogram.getMeasurementValues(pathObjects, columnName[0]).length
 
 List<List<Double>> mesVal = new ArrayList<ArrayList<Double>>(numVar);
