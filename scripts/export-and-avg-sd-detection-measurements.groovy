@@ -78,9 +78,9 @@ print("Elapsed time: "+Duration.between(tic,toc).toMillis()+" ms")
 tic=Instant.now()
 
 maxData=pathObjects.size()
-maxData=0
-if(maxData==0){return}
-//maxData=Histogram.getMeasurementValues(pathObjects, columnName[0]).length
+if(maxData==0){
+print("ERROR: No data matching conditions! Please retest slide: "+imageName)
+return}
 
 List<List<Double>> mesVal = new ArrayList<ArrayList<Double>>(numVar);
 for (int i=0; i<numVar; i++){
