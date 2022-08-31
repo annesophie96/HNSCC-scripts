@@ -61,15 +61,15 @@ t=0
 while(it.hasNext()) {
   PathObject i = it.next();
   t++
-  //if (t%10000==0){ Dialogs.showPlainNotification('Progress',String.valueOf(100*t/maxData)+"%")}
-  if(!(i.getParent().getDisplayedName().equals("Tumor")) || !(i.getPathClass().toString().matches("tumorcells"))) {
-    it.remove();
-  }
   delInst=false
   for (int j=0; j<numVar; j++){
-      if(Histogram.getMeasurementValues(i,columnName[j])==NaN){delInst=true}
+      List<Double> tempVal = new ArrayList<Double>(1);
+      tempVal.add(i)
+      //print(Histogram.getMeasurementValues(tempVal,columnName[j])[0])
+      if(Histogram.getMeasurementValues(tempVal,columnName[j])[0]!=Double.NaN){delInst=true}
   }
-  else if(delinst){
+  //if (t%10000==0){ Dialogs.showPlainNotification('Progress',String.valueOf(100*t/maxData)+"%")}
+  if(!(i.getParent().getDisplayedName().equals("Tumor")) || !(i.getPathClass().toString().matches("tumorcells")) || delInst==true) {
     it.remove();
   }
 }
