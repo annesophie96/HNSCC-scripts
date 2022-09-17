@@ -14,8 +14,7 @@ File directory = new File(directoryName);
         // use directory.mkdirs(); here instead.
     }
 
-var rawPath = buildFilePath(PROJECT_BASE_DIR, "/csv/"+imageName+"_RawDetectionMeasurements.csv")
-var path = buildFilePath(PROJECT_BASE_DIR, "/csv/TumorCellFeatures.csv")
+var path = buildFilePath(PROJECT_BASE_DIR, "/csv/AnnotationAreaCalculations.csv")
 var separator = ";"
 
 //Creating Files
@@ -75,24 +74,9 @@ annotations.each {
         peritumorTotal=ob.getNumericValue(it, "Area µm^2")
     }
 }
-//print(stromaT+" "+zellreichesStromaT+" "+lockeresBindegewebeT+" "+stromaP+" "+zellreichesStromaP+" "+lockeresBindegewebeP+" "+tumor+" "+necrosis+" "+verhornung)
+
 stromaTotalT=stromaT+zellreichesStromaT+lockeresBindegewebeT
 stromaTotalP=stromaP+zellreichesStromaP+lockeresBindegewebeP
-
-//print("Tumor Area    "+tumor+" µm^2")
-//print("Stroma Total Area in Tumor   "+stromaTotalT+" µm^2")
-//print("Stroma Total Area in Peritumor   "+stromaTotalP+" µm^2")
-
-
-//print("Tumor/(Tumor + Stroma Total in Tumor)    "+100*tumor/(tumor+stromaTotalT)+" %")
-//print("Necrosis/(Tumor + Necrosis)    "+100*necrosis/(tumor+necrosis)+" %")
-//print("Zellreiches Stroma/ Stroma Total in Tumor    "+100*zellreichesStromaT/stromaTotalT+" %")
-//print("Stroma/ Stroma Total in Tumor    "+100*stromaT/stromaTotalT+" %")
-//print("Verhornung/(Tumor + Verhornung)    "+100*verhornung/(tumor+verhornung)+" %")
-
-
-//print("Zellreiches Stroma/ Peritumor Total    "+100*zellreichesStromaP/peritumorTotal+" %")
-//print("Stroma Total/ Peritumor Total    "+100*stromaTotalP/peritumorTotal+" %")
 
 //Writing Files
 file.withWriterAppend { fw -> 
@@ -100,7 +84,7 @@ file.withWriterAppend { fw ->
         header = header + "Tumor [mm^2]" + separator + "Stroma Total in Tumor [mm^2]" + separator + "Stroma Total in Peritumor [mm^2]" + separator + "T/(T+STiT)%" + separator + "N/(T+N)%" + separator + "ZS/STiT%" + separator + "S/STiT%" + separator + "V/(T+V)%" + separator + "ZS/PtT%" + separator + "S/PtT%"
         fw.writeLine(header)
     }
-    line=getProjectEntry().getImageName()+ separator + tumor*(10^(-6)) + separator + stromaTotalT*(10^(-6)) + separator + stromaTotalP*(10^(-6)) + separator + 100*tumor/(tumor+stromaTotalT) + separator + 100*necrosis/(tumor+necrosis) + separator + 100*zellreichesStromaT/stromaTotalT + separator + 100*stromaT/stromaTotalT + separator + 100*verhornung/(tumor+verhornung) + separator + 100*zellreichesStromaP/peritumorTotal + separator + 100*stromaTotalP/peritumorTotal
+    line=getProjectEntry().getImageName()+ separator + tumor/10E6 + separator + stromaTotalT/10E6 + separator + stromaTotalP/10E6 + separator + 100*tumor/(tumor+stromaTotalT) + separator + 100*necrosis/(tumor+necrosis) + separator + 100*zellreichesStromaT/stromaTotalT + separator + 100*stromaT/stromaTotalT + separator + 100*verhornung/(tumor+verhornung) + separator + 100*zellreichesStromaP/peritumorTotal + separator + 100*stromaTotalP/peritumorTotal
     line = line + System.getProperty("line.separator")
     fw.append(line)
 }
