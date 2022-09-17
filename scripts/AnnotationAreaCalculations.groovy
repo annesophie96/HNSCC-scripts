@@ -84,7 +84,7 @@ file.withWriterAppend { fw ->
         header = header + "Tumor [mm^2]" + separator + "Stroma Total in Tumor [mm^2]" + separator + "Stroma Total in Peritumor [mm^2]" + separator + "T/(T+STiT)%" + separator + "N/(T+N)%" + separator + "ZS/STiT%" + separator + "S/STiT%" + separator + "V/(T+V)%" + separator + "ZS/PtT%" + separator + "S/PtT%"
         fw.writeLine(header)
     }
-    line=getProjectEntry().getImageName()+ separator + tumor/10E6 + separator + stromaTotalT/10E6 + separator + stromaTotalP/10E6 + separator + 100*tumor/(tumor+stromaTotalT) + separator + 100*necrosis/(tumor+necrosis) + separator + 100*zellreichesStromaT/stromaTotalT + separator + 100*stromaT/stromaTotalT + separator + 100*verhornung/(tumor+verhornung) + separator + 100*zellreichesStromaP/peritumorTotal + separator + 100*stromaTotalP/peritumorTotal
+    line=getProjectEntry().getImageName()+ separator + tumor/1E6 + separator + stromaTotalT/1E6 + separator + stromaTotalP/1E6 + separator + 100*tumor/(tumor+stromaTotalT) + separator + 100*necrosis/(tumor+necrosis) + separator + 100*zellreichesStromaT/stromaTotalT + separator + 100*stromaT/stromaTotalT + separator + 100*verhornung/(tumor+verhornung) + separator + 100*zellreichesStromaP/peritumorTotal + separator + 100*stromaTotalP/peritumorTotal
     line = line + System.getProperty("line.separator")
     fw.append(line)
 }
