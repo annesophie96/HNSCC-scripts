@@ -3,12 +3,12 @@ import java.lang.Math
 import java.util.Iterator
 import java.time.*
 
-
+//Select Data
 columnName = ["Nucleus: Area", "Nucleus: Max caliper"]    // Change this to your column of interest
 numVar = columnName.size
 
+//Setting up Exports
 imageName = getProjectEntry().getImageName()
-
 
 String PATH = PROJECT_BASE_DIR
 
@@ -23,11 +23,9 @@ File directory = new File(directoryName);
 
 var rawPath = buildFilePath(PROJECT_BASE_DIR, "/csv/"+imageName+"_RawDetectionMeasurements.csv")
 var path = buildFilePath(PROJECT_BASE_DIR, "/csv/TumorCellFeatures.csv")
-
-var pathObjects = getDetectionObjects()
-
 var separator = ";"
 
+//Creating Files
 File file = new File(path)
 
 File rawFile = new File(rawPath)
@@ -51,11 +49,12 @@ rawHeader=""
 
 var exists = file.exists()
 
+
+//Select Objects
+tic=Instant.now() //Start Timer
+
 boolean delInst = false
-
-
-tic=Instant.now()
-
+var pathObjects = getDetectionObjects()
 Iterator<PathObject> it = pathObjects.iterator();
 t=0
 while(it.hasNext()) {
@@ -73,9 +72,11 @@ while(it.hasNext()) {
   }
 }
 
-toc=Instant.now()
+toc=Instant.now() //Stop Timer
 print("Elapsed time: "+Duration.between(tic,toc).toMillis()+" ms")
-tic=Instant.now()
+
+//Start Calculations
+tic=Instant.now() //Start Timer
 
 maxData=pathObjects.size()
 if(maxData==0){
@@ -98,9 +99,9 @@ for (int j=0; j<numVar; j++){
     mesLnAvg[j] = Math.exp(mesLnAvg[j])
 }
 
-toc=Instant.now()
+toc=Instant.now() //Stop Timer
 print("Elapsed time: "+Duration.between(tic,toc).toMillis()+" ms")
-tic=Instant.now()
+tic=Instant.now() //Start Timer
 
 for (int j=0; j<numVar; j++){
     for (int i=0; i < maxData; i++) {
@@ -110,9 +111,11 @@ for (int j=0; j<numVar; j++){
     mesLnSD[j] = Math.exp(mesLnSD[j])
 }
 
-toc=Instant.now()
+toc=Instant.now() //Stop Timer
 print("Elapsed time: "+Duration.between(tic,toc).toMillis()+" ms")
-tic=Instant.now()
+
+//Start Exports
+tic=Instant.now() //Start Timer
 
 file.withWriterAppend { fw -> 
     if (!exists){
@@ -129,9 +132,9 @@ file.withWriterAppend { fw ->
     fw.append(line)
 }
 
-toc=Instant.now()
+toc=Instant.now() //Stop Timer
 print("Elapsed time: "+Duration.between(tic,toc).toMillis()+" ms")
-tic=Instant.now()
+tic=Instant.now() //Start Timer
 
 rawFile.withWriterAppend { fw -> 
     columnName.each{
@@ -152,7 +155,7 @@ rawFile.withWriterAppend { fw ->
     }
 }
 
-toc=Instant.now()
+toc=Instant.now() //Stop Timer
 print("Elapsed time: "+Duration.between(tic,toc).toMillis()+" ms")
 
 print "Done!"
