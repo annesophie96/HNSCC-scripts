@@ -21,8 +21,8 @@ File directory = new File(directoryName);
         // use directory.mkdirs(); here instead.
     }
 
-var rawPath = buildFilePath(PROJECT_BASE_DIR, "/csv/"+imageName+" Detection Measurements Raw.csv")
-var path = buildFilePath(PROJECT_BASE_DIR, "/csv/Detection Measurements LogNorm AVG SD.csv")
+var rawPath = buildFilePath(PROJECT_BASE_DIR, "/csv/"+imageName+"_RawDetectionMeasurements.csv")
+var path = buildFilePath(PROJECT_BASE_DIR, "/csv/TumorCellFeatures.csv")
 
 var pathObjects = getDetectionObjects()
 

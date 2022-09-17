@@ -1,3 +1,8 @@
 
 scripts/avg-sd-detection-measurements.groovy
 scripts/export-detection-measurements.groovy
+scripts/old/avg-sd-detection-measurements.groovy
+scripts/export-and-avg-sd-detection-measurements.groovy
+scripts/old/export-and-avg-sd-detection-measurements.groovy
+scripts/old/export-detection-measurements.groovy
+scripts/old/original-source-script.groovy
